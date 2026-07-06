@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Omar Serri Charif — Digital Marketing Specialist</title>
+<style>
+  @font-face {
+    font-family: 'system-display';
+    src: local('Arial Black');
+  }
+
+  :root{
+    --bg: #0B1520;
+    --bg-panel: #101F2C;
+    --bg-panel-2: #142534;
+    --line: #223140;
+    --text: #F1EEE7;
+    --text-dim: #8FA3AD;
+    --gold: #D9A441;
+    --coral: #E8735F;
+    --teal: #4FA79A;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  .display{
+    font-family:'Archivo Black','Arial Black',sans-serif;
+    letter-spacing:-0.01em;
+  }
+
+  .mono{
+    font-family:'IBM Plex Mono','Courier New',monospace;
+  }
+
+  a{ color:inherit; }
+
+  ::selection{ background:var(--gold); color:var(--bg); }
+
+  /* ---------- grain overlay ---------- */
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:1;
+    opacity:0.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:22px 6vw;
+    background:rgba(11,21,32,0.72);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .logo{ font-size:15px; letter-spacing:0.08em; }
+  nav .logo span{ color:var(--gold); }
+  nav ul{
+    list-style:none; display:flex; gap:28px;
+  }
+  nav ul a{
+    text-decoration:none; font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--text-dim); font-family:'IBM Plex Mono',monospace;
+    transition:color .2s ease;
+    padding:4px 2px;
+  }
+  nav ul a:hover, nav ul a:focus-visible{ color:var(--gold); }
+  nav ul a:focus-visible{ outline:1px solid var(--gold); outline-offset:4px; }
+  .nav-toggle{ display:none; }
+
+  @media (max-width:720px){
+    nav ul{ gap:16px; }
+    nav ul li:nth-child(4){ display:none; }
+  }
+  @media (max-width:560px){
+    nav ul li:nth-child(3){ display:none; }
+  }
+
+  /* ---------- hero ---------- */
+  header.hero{
+    min-height:100vh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:120px 6vw 60px;
+    position:relative;
+    border-bottom:1px solid var(--line);
+  }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:22px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{
+    content:''; width:8px; height:8px; border-radius:50%;
+    background:var(--coral);
+    box-shadow:0 0 0 0 rgba(232,115,95,0.6);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%{ box-shadow:0 0 0 0 rgba(232,115,95,0.5); }
+    70%{ box-shadow:0 0 0 8px rgba(232,115,95,0); }
+    100%{ box-shadow:0 0 0 0 rgba(232,115,95,0); }
+  }
+
+  h1.name{
+    font-size:clamp(44px, 9vw, 118px);
+    line-height:0.94;
+    text-transform:uppercase;
+  }
+  h1.name .accent{ color:var(--gold); }
+
+  .role-line{
+    margin-top:26px;
+    font-size:clamp(16px, 2.4vw, 22px);
+    color:var(--text-dim);
+    max-width:640px;
+    font-weight:400;
+  }
+  .role-line strong{ color:var(--text); font-weight:600; }
+
+  .hero-cta{
+    margin-top:38px; display:flex; gap:16px; flex-wrap:wrap;
+  }
+  .btn{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px; letter-spacing:0.06em; text-transform:uppercase;
+    padding:14px 26px; border-radius:2px; text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .2s ease, background .2s ease, color .2s ease;
+  }
+  .btn-solid{ background:var(--gold); color:var(--bg); }
+  .btn-solid:hover{ transform:translateY(-2px); background:#ECB65B; }
+  .btn-ghost{ border:1px solid var(--line); color:var(--text); }
+  .btn-ghost:hover{ border-color:var(--gold); color:var(--gold); transform:translateY(-2px); }
+
+  /* ---------- ticker ---------- */
+  .ticker-wrap{
+    border-bottom:1px solid var(--line);
+    background:var(--bg-panel);
+    overflow:hidden;
+    white-space:nowrap;
+    padding:14px 0;
+  }
+  .ticker{
+    display:inline-flex;
+    animation:scroll 32s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce){ .ticker{ animation:none; } }
+  .ticker span{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px; letter-spacing:0.04em;
+    padding:0 28px;
+    color:var(--text-dim);
+    border-right:1px solid var(--line);
+  }
+  .ticker span b{ color:var(--gold); font-weight:600; }
+  @keyframes scroll{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(-50%); }
+  }
+
+  /* ---------- sections ---------- */
+  section{
+    padding:110px 6vw;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+
+  .section-head{
+    display:flex; align-items:baseline; gap:16px; margin-bottom:56px;
+    flex-wrap:wrap;
+  }
+  .section-num{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--gold); font-size:13px;
+  }
+  .section-title{
+    font-size:clamp(28px,4vw,44px);
+    text-transform:uppercase;
+  }
+  .section-title .accent{ color:var(--teal); }
+
+  /* about */
+  .about-grid{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:70px;
+    align-items:start;
+  }
+  @media (max-width:860px){ .about-grid{ grid-template-columns:1fr; } }
+  .about-grid p{ color:var(--text-dim); font-size:17px; max-width:60ch; }
+  .about-grid p + p{ margin-top:18px; }
+  .about-grid p strong{ color:var(--text); }
+
+  .fact-list{ border-top:1px solid var(--line); }
+  .fact{
+    display:flex; justify-content:space-between; gap:20px;
+    padding:16px 0; border-bottom:1px solid var(--line);
+    font-family:'IBM Plex Mono',monospace; font-size:13px;
+  }
+  .fact span:first-child{ color:var(--text-dim); text-transform:uppercase; letter-spacing:0.05em; }
+  .fact span:last-child{ color:var(--text); text-align:right; }
+
+  /* timeline */
+  .timeline{ border-left:1px solid var(--line); padding-left:34px; }
+  .job{ position:relative; padding-bottom:56px; }
+  .job:last-child{ padding-bottom:0; }
+  .job::before{
+    content:''; position:absolute; left:-40px; top:4px;
+    width:11px; height:11px; border-radius:50%;
+    background:var(--bg); border:2px solid var(--gold);
+  }
+  .job-head{
+    display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;
+    margin-bottom:10px;
+  }
+  .job-co{ font-size:20px; font-weight:700; }
+  .job-role{ color:var(--coral); font-size:14px; font-family:'IBM Plex Mono',monospace; margin-top:4px;}
+  .job-date{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim);
+    white-space:nowrap;
+  }
+  .job ul{ list-style:none; margin-top:14px; }
+  .job li{
+    color:var(--text-dim); font-size:15px; position:relative; padding-left:20px;
+    margin-bottom:8px; max-width:70ch;
+  }
+  .job li::before{
+    content:'—'; position:absolute; left:0; color:var(--teal);
+  }
+
+  /* skills */
+  .skills-cols{ display:grid; grid-template-columns:repeat(3,1fr); gap:48px; }
+  @media (max-width:860px){ .skills-cols{ grid-template-columns:1fr; gap:36px; } }
+  .skill-group h4{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:18px;
+  }
+  .tag-row{ display:flex; flex-wrap:wrap; gap:10px; }
+  .tag{
+    border:1px solid var(--line); padding:8px 14px; border-radius:2px;
+    font-size:13px; color:var(--text-dim);
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .tag:hover{ border-color:var(--teal); color:var(--text); }
+
+  /* metrics */
+  .metrics{ display:grid; grid-template-columns:repeat(4,1fr); gap:36px; }
+  @media (max-width:860px){ .metrics{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:480px){ .metrics{ grid-template-columns:1fr; } }
+  .metric{ border-top:1px solid var(--line); padding-top:20px; }
+  .metric-num{
+    font-family:'Archivo Black','Arial Black',sans-serif;
+    font-size:clamp(34px,4vw,52px);
+    color:var(--gold);
+    line-height:1;
+  }
+  .metric-label{
+    color:var(--text-dim); font-size:13px; margin-top:10px; max-width:24ch;
+  }
+  .bar-track{
+    margin-top:14px; height:4px; background:var(--line); border-radius:2px; overflow:hidden;
+  }
+  .bar-fill{
+    height:100%; width:0%; background:var(--teal);
+    transition:width 1.4s cubic-bezier(.2,.8,.2,1);
+  }
+  .bar-fill.coral{ background:var(--coral); }
+  .bar-fill.gold{ background:var(--gold); }
+
+  /* projects */
+  .project-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:28px; }
+  @media (max-width:860px){ .project-grid{ grid-template-columns:1fr; } }
+  .project-card{
+    background:var(--bg-panel); border:1px solid var(--line);
+    padding:34px; border-radius:4px;
+    transition:transform .25s ease, border-color .25s ease;
+  }
+  .project-card:hover{ transform:translateY(-4px); border-color:var(--gold); }
+  .project-tag{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em;
+    text-transform:uppercase; color:var(--coral); margin-bottom:14px; display:inline-block;
+  }
+  .project-card h3{ font-size:24px; margin-bottom:12px; }
+  .project-card p{ color:var(--text-dim); font-size:15px; margin-bottom:18px; }
+  .project-stats{ display:flex; gap:24px; flex-wrap:wrap; }
+  .project-stats div{ font-family:'IBM Plex Mono',monospace; }
+  .project-stats b{ display:block; color:var(--teal); font-size:20px; }
+  .project-stats span{ color:var(--text-dim); font-size:11px; text-transform:uppercase; }
+
+  /* certifications */
+  .cert-list{ columns:2; column-gap:48px; }
+  @media (max-width:700px){ .cert-list{ columns:1; } }
+  .cert-item{
+    break-inside:avoid; display:flex; gap:14px; padding:16px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .cert-item .num{ font-family:'IBM Plex Mono',monospace; color:var(--gold); font-size:13px; }
+  .cert-item .name{ font-size:15px; }
+  .cert-item .issuer{ display:block; color:var(--text-dim); font-size:12px; margin-top:2px; }
+
+  /* contact / footer */
+  footer{
+    padding:100px 6vw 60px;
+    display:flex; flex-direction:column; align-items:flex-start; gap:30px;
+  }
+  footer h2{
+    font-size:clamp(30px,6vw,64px); text-transform:uppercase;
+  }
+  footer h2 .accent{ color:var(--gold); }
+  .contact-row{
+    display:flex; gap:36px; flex-wrap:wrap;
+    font-family:'IBM Plex Mono',monospace; font-size:14px;
+  }
+  .contact-row a{
+    text-decoration:none; color:var(--text-dim); border-bottom:1px solid transparent;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .contact-row a:hover, .contact-row a:focus-visible{ color:var(--gold); border-color:var(--gold); }
+  .contact-row a:focus-visible{ outline:none; }
+  .foot-note{
+    color:var(--text-dim); font-size:12px; font-family:'IBM Plex Mono',monospace;
+    margin-top:20px;
+  }
+
+  .reveal{
+    opacity:0; transform:translateY(24px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<nav>
+  <div class="logo">OMAR<span>.</span>SERRI</div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">Available for new opportunities</div>
+  <h1 class="name display">Omar Serri<br>Char<span class="accent">i</span>f</h1>
+  <p class="role-line">Digital Marketing Specialist working across <strong>social strategy</strong>, <strong>paid media</strong>, and <strong>content photography</strong>, currently running campaigns for medical conferences and healthcare brands across the UAE.</p>
+  <div class="hero-cta">
+    <a href="#experience" class="btn btn-solid">See the work ↓</a>
+    <a href="#contact" class="btn btn-ghost">Get in touch</a>
+  </div>
+</header>
+
+<div class="ticker-wrap" role="marquee" aria-label="Career highlights">
+  <div class="ticker" id="ticker"></div>
+</div>
+
+<section id="about">
+  <div class="section-head">
+    <span class="section-num mono">01</span>
+    <h1 class="section-title display">About <span class="accent">Me</span></h1>
+  </div>
+  <div class="about-grid">
+    <div class="reveal">
+      <p>I'm a <strong>results-driven Digital Marketing Specialist</strong> with 4+ years of experience across social media, paid advertising, SEO/AEO, and content production. I like the part of marketing where a data point turns into a decision, and the part where I'm behind a camera capturing the moment a conference room actually comes alive.</p>
+      <p>Right now I split my time between <strong>MCO</strong>, a medical conference organizer, and the <strong>Emirates Thoracic Society</strong>, where I run everything from ad budgets to public health awareness campaigns. On the side, I build independent content brands, because I'd rather learn growth by doing it myself than just studying it.</p>
+    </div>
+    <div class="fact-list reveal">
+      <div class="fact"><span>Based in</span><span>Abu Dhabi / Dubai, UAE</span></div>
+      <div class="fact"><span>Languages</span><span>Arabic · English · German</span></div>
+      <div class="fact"><span>Education</span><span>B.Sc. Business Admin, Gelisim Univ.</span></div>
+      <div class="fact"><span>Nationality</span><span>Colombian</span></div>
+      <div class="fact"><span>Focus</span><span>Social, Paid Media, Photography</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-head">
+    <span class="section-num mono">02</span>
+    <h1 class="section-title display">Experi<span class="accent">ence</span></h1>
+  </div>
+  <div class="timeline">
+    <div class="job reveal">
+      <div class="job-head">
+        <div>
+          <div class="job-co">MCO — Medetarian Conference Organizing</div>
+          <div class="job-role">Marketing Executive &amp; Content Photographer</div>
+        </div>
+        <div class="job-date">AUG 2025 — PRESENT</div>
+      </div>
+      <ul>
+        <li>Manage all company social accounts, growing audience engagement by 40%</li>
+        <li>Shoot professional event photography and live social content at major conferences</li>
+        <li>Grew the company's organic follower base by 30%+ within 3 months</li>
+        <li>Built internal onboarding workflows while training new marketing interns</li>
+      </ul>
+    </div>
+    <div class="job reveal">
+      <div class="job-head">
+        <div>
+          <div class="job-co">ETS — Emirates Thoracic Society</div>
+          <div class="job-role">Social Media Marketing Specialist</div>
+        </div>
+        <div class="job-date">AUG 2025 — PRESENT</div>
+      </div>
+      <ul>
+        <li>Own the full marketing budget and resource allocation</li>
+        <li>Ran COPD &amp; Asthma awareness campaigns reaching millions at a fraction of standard cost</li>
+        <li>Doubled page engagement through data-driven content strategy</li>
+        <li>Recovered a suspended platform account with zero business interruption</li>
+      </ul>
+    </div>
+    <div class="job reveal">
+      <div class="job-head">
+        <div>
+          <div class="job-co">Istanbul Gelisim University</div>
+          <div class="job-role">Event Assistant &amp; Digital Marketing Specialist</div>
+        </div>
+        <div class="job-date">DEC 2021 — DEC 2024</div>
+      </div>
+      <ul>
+        <li>Coordinated logistics and marketing collateral for large-scale student events</li>
+        <li>Captured photography and video content throughout ceremonies and celebrations</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-head">
+    <span class="section-num mono">03</span>
+    <h1 class="section-title display">Skills &amp; <span class="accent">Tools</span></h1>
+  </div>
+  <div class="skills-cols">
+    <div class="skill-group reveal">
+      <h4>Strategy</h4>
+      <div class="tag-row">
+        <span class="tag">Digital Marketing Strategy</span>
+        <span class="tag">SEO</span>
+        <span class="tag">AEO</span>
+        <span class="tag">Marketing Budget Mgmt</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <h4>Social &amp; Paid</h4>
+      <div class="tag-row">
+        <span class="tag">Social Media Ads</span>
+        <span class="tag">Community Management</span>
+        <span class="tag">Meta Ads Manager</span>
+        <span class="tag">Google Analytics</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <h4>Creative</h4>
+      <div class="tag-row">
+        <span class="tag">Content Photography</span>
+        <span class="tag">Videography</span>
+        <span class="tag">CapCut</span>
+        <span class="tag">Canva</span>
+        <span class="tag">Adobe Suite</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="impact">
+  <div class="section-head">
+    <span class="section-num mono">04</span>
+    <h1 class="section-title display">Impact by <span class="accent">Numbers</span></h1>
+  </div>
+  <div class="metrics">
+    <div class="metric reveal">
+      <div class="metric-num" data-target="40">0%</div>
+      <div class="metric-label">Engagement growth at MCO</div>
+      <div class="bar-track"><div class="bar-fill teal" data-width="40"></div></div>
+    </div>
+    <div class="metric reveal">
+      <div class="metric-num" data-target="30">0%</div>
+      <div class="metric-label">Organic follower growth in 3 months</div>
+      <div class="bar-track"><div class="bar-fill coral" data-width="30"></div></div>
+    </div>
+    <div class="metric reveal">
+      <div class="metric-num" data-target="100">0%</div>
+      <div class="metric-label">Page engagement doubled at ETS</div>
+      <div class="bar-track"><div class="bar-fill gold" data-width="100"></div></div>
+    </div>
+    <div class="metric reveal">
+      <div class="metric-num-static">8M+</div>
+      <div class="metric-label">Views on an independent TikTok channel</div>
+      <div class="bar-track"><div class="bar-fill teal" data-width="85"></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-head">
+    <span class="section-num mono">05</span>
+    <h1 class="section-title display">Independent <span class="accent">Projects</span></h1>
+  </div>
+  <div class="project-grid">
+    <div class="project-card reveal">
+      <span class="project-tag">Content Brand</span>
+      <h3>Travel TikTok Channel</h3>
+      <p>Built an independent travel-focused TikTok account from zero, entirely through organic content strategy, no paid promotion.</p>
+      <div class="project-stats">
+        <div><b>20K+</b><span>Followers</span></div>
+        <div><b>8M+</b><span>Views</span></div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <span class="project-tag">Faceless Brand</span>
+      <h3>Health &amp; Fitness Channel</h3>
+      <p>Building a faceless fitness content brand across TikTok, Instagram, and YouTube with a branded mascot and a repeatable creative workflow, from scripting to editing to publishing.</p>
+      <div class="project-stats">
+        <div><b>3</b><span>Platforms</span></div>
+        <div><b>1</b><span>Original mascot</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="section-head">
+    <span class="section-num mono">06</span>
+    <h1 class="section-title display">Certifica<span class="accent">tions</span></h1>
+  </div>
+  <div class="cert-list">
+    <div class="cert-item reveal"><span class="num">01</span><span class="name">Apple Ads Certified<span class="issuer">Apple</span></span></div>
+    <div class="cert-item reveal"><span class="num">02</span><span class="name">Measure &amp; Optimize Social Media Campaigns<span class="issuer">Meta Blueprint</span></span></div>
+    <div class="cert-item reveal"><span class="num">03</span><span class="name">Advertising with Meta<span class="issuer">Meta Blueprint</span></span></div>
+    <div class="cert-item reveal"><span class="num">04</span><span class="name">Fundamentals of Social Media Advertising<span class="issuer">Meta Blueprint</span></span></div>
+    <div class="cert-item reveal"><span class="num">05</span><span class="name">Social Media Management<span class="issuer">Meta Blueprint</span></span></div>
+    <div class="cert-item reveal"><span class="num">06</span><span class="name">Google Ads Master Essentials &amp; Fundamentals<span class="issuer">Coursera</span></span></div>
+    <div class="cert-item reveal"><span class="num">07</span><span class="name">The Science of Selling<span class="issuer">LinkedIn Learning</span></span></div>
+    <div class="cert-item reveal"><span class="num">08</span><span class="name">Marketing Tools: SEO<span class="issuer">LinkedIn Learning</span></span></div>
+  </div>
+</section>
+
+<footer id="contact">
+  <h1 class="display">Let's build <span class="accent">something.</span></h1>
+  <div class="contact-row">
+    <a href="mailto:omar.serri.ch@gmail.com">omar.serri.ch@gmail.com</a>
+    <a href="tel:+971564611101">+971 56 461 1101</a>
+    <a href="https://linkedin.com/in/omarserri" target="_blank" rel="noopener">linkedin.com/in/omarserri</a>
+  </div>
+  <div class="foot-note">© 2026 Omar Serri Charif.</div>
+</footer>
+
+<script>
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el=>io.observe(el));
+
+  // animated bars + counters
+  const metrics = document.querySelectorAll('.metric');
+  const mio = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const bar = e.target.querySelector('.bar-fill');
+      if(bar){ bar.style.width = bar.dataset.width + '%'; }
+      const numEl = e.target.querySelector('.metric-num');
+      if(numEl){
+        const target = parseInt(numEl.dataset.target, 10);
+        let current = 0;
+        const step = Math.max(1, Math.round(target/40));
+        const timer = setInterval(()=>{
+          current += step;
+          if(current >= target){ current = target; clearInterval(timer); }
+          numEl.textContent = current + '%';
+        }, 25);
+      }
+      mio.unobserve(e.target);
+    });
+  }, { threshold: 0.4 });
+  metrics.forEach(m=>mio.observe(m));
+
+  // ticker content (duplicated for seamless loop)
+  const tickerItems = [
+    '40% ENGAGEMENT GROWTH AT MCO',
+    '30% ORGANIC FOLLOWER GROWTH IN 3 MONTHS',
+    '100% PAGE ENGAGEMENT INCREASE AT ETS',
+    'MULTI-MILLION IMPRESSION CAMPAIGNS AT A FRACTION OF STANDARD COST',
+    '20K+ FOLLOWERS · 8M+ VIEWS ON AN INDEPENDENT TIKTOK CHANNEL',
+    'SUSPENDED ACCOUNT RECOVERED WITH ZERO BUSINESS INTERRUPTION'
+  ];
+  const ticker = document.getElementById('ticker');
+  const build = () => tickerItems.map(t=>{
+    const parts = t.split(/(\d+%|\d+K\+|\d+M\+)/);
+    return '<span>' + parts.map(p=> /\d/.test(p) ? '<b>'+p+'</b>' : p).join('') + '</span>';
+  }).join('');
+  ticker.innerHTML = build() + build();
+</script>
+
+</body>
+</html>
