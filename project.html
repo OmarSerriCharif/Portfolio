@@ -5,22 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
-  <!-- Title, description, Open Graph tags and favicon are set from the database by js/public/chrome.js -->
-  <title>Portfolio</title>
+  <!-- Title, description, Open Graph tags and favicon are set from the database by js/public/project.js -->
+  <title>Project</title>
   <meta name="description" content="">
   <meta name="theme-color" content="#0b1520">
   <script src="js/theme-init.js"></script>
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/portfolio.css">
-  <script type="module" src="js/public/main.js"></script>
+  <script type="module" src="js/public/project.js"></script>
 </head>
-<body class="is-loading">
+<body class="is-loading page-project">
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-header" id="top">
     <div class="container site-header__inner">
-      <a class="brand" id="brand" href="#top"><span class="skeleton skeleton--brand" aria-hidden="true"></span></a>
+      <a class="brand" id="brand" href="index.html"><span class="skeleton skeleton--brand" aria-hidden="true"></span></a>
       <nav class="nav" aria-label="Main">
         <ul class="nav__list" id="nav-list"></ul>
       </nav>
@@ -37,25 +37,15 @@
   </header>
 
   <main id="main" tabindex="-1">
-    <!-- Loading skeleton, replaced once content arrives -->
-    <div class="page-skeleton" role="status" aria-label="Loading portfolio">
-      <div class="container hero hero--skeleton" aria-hidden="true">
-        <div class="hero__text">
-          <div class="skeleton skeleton--line skeleton--short"></div>
-          <div class="skeleton skeleton--title"></div>
-          <div class="skeleton skeleton--title skeleton--short"></div>
-          <div class="skeleton skeleton--line"></div>
-          <div class="skeleton skeleton--line skeleton--short"></div>
-        </div>
-        <div class="skeleton skeleton--portrait"></div>
-      </div>
-      <div class="container section" aria-hidden="true">
-        <div class="skeleton skeleton--heading"></div>
-        <div class="skeleton-grid">
-          <div class="skeleton skeleton--card"></div>
-          <div class="skeleton skeleton--card"></div>
-          <div class="skeleton skeleton--card"></div>
-        </div>
+    <div class="container project-skeleton" role="status" aria-label="Loading project">
+      <div aria-hidden="true">
+        <div class="skeleton skeleton--line skeleton--short"></div>
+        <div class="skeleton skeleton--title"></div>
+        <div class="skeleton skeleton--line"></div>
+        <div class="skeleton skeleton--cover"></div>
+        <div class="skeleton skeleton--line"></div>
+        <div class="skeleton skeleton--line"></div>
+        <div class="skeleton skeleton--line skeleton--short"></div>
       </div>
     </div>
   </main>
