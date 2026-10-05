@@ -413,7 +413,7 @@ select * from (values
   ('projects',     'Projects',     'Selected Projects', 'Independent brands and campaigns I have built.',           true,  4),
   ('services',     'Services',     'What I Can Do',     'Ways I can help your brand grow.',                         true,  5),
   ('testimonials', 'Testimonials', 'Kind Words',        'What colleagues and clients say.',                         true,  6),
-  ('contact',      'Contact',      'Let''s build something.', 'Have a campaign, event or brand in mind? Say hello.', true, 7)
+  ('contact',      'Contact',      'Let’s build something.', 'Have a campaign, event or brand in mind? Say hello.', true, 7)
 ) as v(key, nav_label, title, subtitle, is_visible, display_order)
 where not exists (select 1 from public.sections);
 
@@ -429,9 +429,9 @@ on conflict (id) do nothing;
 
 insert into public.about (id, body)
 values (1,
-'I''m a **results-driven Digital Marketing Specialist** with 4+ years of experience across social media, paid advertising, SEO/AEO and content production. I like the part of marketing where a data point turns into a decision — and the part where I''m behind a camera capturing the moment a conference room comes alive.
+'I’m a **results-driven Digital Marketing Specialist** with 4+ years of experience across social media, paid advertising, SEO/AEO and content production. I like the part of marketing where a data point turns into a decision — and the part where I’m behind a camera capturing the moment a conference room comes alive.
 
-Right now I split my time between **MCO**, a medical conference organizer, and the **Emirates Thoracic Society**, where I run everything from ad budgets to public health awareness campaigns. On the side, I build independent content brands, because I''d rather learn growth by doing it than just studying it.
+Right now I split my time between **MCO**, a medical conference organizer, and the **Emirates Thoracic Society**, where I run everything from ad budgets to public health awareness campaigns. On the side, I build independent content brands, because I’d rather learn growth by doing it than just studying it.
 
 - Based in Abu Dhabi / Dubai, UAE
 - Speaks Arabic, English and German
