@@ -1,0 +1,10 @@
+# Security headers for Netlify (and Cloudflare Pages). Vercel uses vercel.json.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+/admin/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
