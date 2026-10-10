@@ -4,7 +4,7 @@
 import { listPublic, getSingleton } from '../api.js';
 import { el, assetUrl, resolveLink, link, initials, safeUrl } from '../utils.js';
 import { icon, hasIcon, socialIcon } from '../icons.js';
-import { renderMarkdown } from '../markdown.js';
+import { renderMarkdown, markdownToText } from '../markdown.js';
 import { loadInto, sectionHeader, skeletonText, emptyState } from '../main.js';
 
 /** Create the <section> wrapper for a sections row. Returns { element, body }. */
@@ -348,10 +348,33 @@ export function faqAccordion(faqs) {
   return list;
 }
 
+/** Publish the visible FAQs as schema.org FAQPage structured data for search engines. */
+function setFaqSchema(faqs) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: markdownToText(faq.answer, 5000) },
+    })),
+  };
+  let script = document.getElementById('faq-schema');
+  if (!script) {
+    script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-schema';
+    document.head.appendChild(script);
+  }
+  // textContent on a DOM-created script is never parsed as HTML.
+  script.textContent = JSON.stringify(schema);
+}
+
 export async function renderFaqs(body) {
   await loadInto(body, async () => {
     const faqs = await listPublic('faqs');
     if (!faqs.length) return emptyState('Frequently asked questions will appear here soon.', 'No questions yet', 'help');
+    setFaqSchema(faqs);
     return faqAccordion(faqs);
   }, { skeleton: () => skeletonText(5) });
 }
