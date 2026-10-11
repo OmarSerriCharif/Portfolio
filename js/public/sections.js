@@ -79,7 +79,7 @@ export async function renderHero(element, ctx) {
           if (hero.description) node = el('p', { class: 'hero__description', text: hero.description });
           break;
         case 'ctas': {
-          const primary = ctaButton(hero.primary_cta_label, hero.primary_cta_url, { variant: 'accent', isHome: ctx.isHome });
+          const primary = ctaButton(hero.primary_cta_label, hero.primary_cta_url, { isHome: ctx.isHome });
           const secondary = ctaButton(hero.secondary_cta_label, hero.secondary_cta_url, { variant: 'outline', isHome: ctx.isHome });
           if (primary || secondary) node = el('div', { class: 'hero__ctas' }, [primary, secondary]);
           break;

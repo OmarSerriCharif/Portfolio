@@ -283,7 +283,7 @@ function navLink(item, isHome, className) {
   return el('a', { ...attrs, href }, [item.label]);
 }
 
-function renderHeader(settings, navItems, isHome) {
+function renderHeader(settings, navItems, isHome, hero = null) {
   const header = document.getElementById('site-header');
   if (!header) return;
   clear(header);
@@ -327,6 +327,11 @@ function renderHeader(settings, navItems, isHome) {
   });
 
   const actions = el('div', { class: 'site-header__actions' });
+  // Header call-to-action reuses the hero's primary CTA so it stays editable in one place.
+  const ctaHref = hero ? resolveLink(hero.primary_cta_url, null, isHome) : null;
+  if (hero?.primary_cta_label && ctaHref) {
+    actions.appendChild(link(ctaHref, { class: 'btn btn--sm header-cta' }, [hero.primary_cta_label]));
+  }
   if (settings.allow_theme_toggle !== false) actions.appendChild(themeToggleButton());
   actions.appendChild(toggle);
 
@@ -428,11 +433,12 @@ export async function initSite({ isHome = false } = {}) {
     throw new Error('Supabase is not configured. Add your project URL and anon key to js/config.js.');
   }
 
-  const [settings, navItems, socials, documents] = await Promise.all([
+  const [settings, navItems, socials, documents, hero] = await Promise.all([
     getSingleton('site_settings').catch(() => null),
     listPublic('navigation_items').catch(() => []),
     listPublic('social_links').catch(() => []),
     listPublic('documents').catch(() => []),
+    getSingleton('hero').catch(() => null),
   ]);
 
   currentSettings = settings || { company_name: '', allow_theme_toggle: true };
@@ -440,7 +446,7 @@ export async function initSite({ isHome = false } = {}) {
     applyBranding(settings);
     if (!storageGet(THEME_KEY)) applyTheme(resolveInitialTheme(settings.default_theme));
   }
-  renderHeader(currentSettings, navItems, isHome);
+  renderHeader(currentSettings, navItems, isHome, hero);
   renderFooter(currentSettings, navItems, socials, documents, isHome);
   applySeo();
 
