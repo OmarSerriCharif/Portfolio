@@ -107,7 +107,9 @@ export async function renderHero(element, ctx) {
 
     let media = null;
     const mediaUrl = assetUrl(hero.media_url);
-    if (hero.media_type === 'image' && mediaUrl) {
+    if (hero.media_type === 'devices') {
+      media = deviceMockup(hero, mediaUrl, ctx.settings?.company_name);
+    } else if (hero.media_type === 'image' && mediaUrl) {
       media = el('div', { class: 'hero__media' }, [
         el('img', { src: mediaUrl, alt: hero.media_alt || '', fetchpriority: 'high', decoding: 'async', width: 800, height: 900 }),
       ]);
@@ -132,6 +134,34 @@ export async function renderHero(element, ctx) {
 
     return el('div', { class: `hero${media ? '' : ' hero--no-media'}` }, [content, media]);
   }, { skeleton: () => skeletonText(5) });
+}
+
+/** One screen of the mockup: the uploaded image/video, or a branded placeholder. */
+function deviceScreen(url, alt, placeholder) {
+  if (!url) return el('div', { class: 'device__placeholder', 'aria-hidden': 'true', text: placeholder || '' });
+  if (/\.(mp4|webm)(\?|$)/i.test(url)) {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const video = el('video', { src: url, muted: true, loop: true, playsinline: true, autoplay: !reduced, 'aria-label': alt || null });
+    video.muted = true;
+    return video;
+  }
+  return el('img', { src: url, alt: alt || '', decoding: 'async', fetchpriority: 'high' });
+}
+
+/** Laptop + phone mockup built in CSS; the admin only uploads the two screen images. */
+function deviceMockup(hero, laptopUrl, companyName) {
+  const phoneUrl = assetUrl(hero.phone_image_url);
+  return el('div', { class: 'hero__media hero__media--devices' }, [
+    el('div', { class: 'device-laptop' }, [
+      el('div', { class: 'device-laptop__lid' }, [
+        el('div', { class: 'device-laptop__screen' }, [deviceScreen(laptopUrl, hero.media_alt, companyName)]),
+      ]),
+      el('div', { class: 'device-laptop__base', 'aria-hidden': 'true' }),
+    ]),
+    el('div', { class: 'device-phone' }, [
+      el('div', { class: 'device-phone__screen' }, [deviceScreen(phoneUrl, hero.phone_image_alt, companyName)]),
+    ]),
+  ]);
 }
 
 /* ------------------------------------------------------------------ */

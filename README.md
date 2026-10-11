@@ -207,7 +207,7 @@ After deploying, set **Site settings → Canonical base URL** in the dashboard t
 | `#/settings`           | Company info, contact, logo/favicon, brand colours, default theme, SEO, footer, social links, documents |
 | `#/sections`           | Homepage section order (drag & drop), visibility, eyebrow/heading/intro text                          |
 | `#/navigation`         | Header/footer links to sections, pages or external URLs                                               |
-| `#/hero`               | Hero text, CTAs, statistic, trust line, image/video, element order & visibility                        |
+| `#/hero`               | Hero text, CTAs, statistic, trust line, image/video or laptop + phone mockup, element order & visibility |
 | `#/about`              | Company description, mission, vision, image, statistics, values                                       |
 | `#/services`           | Services (+ features, benefits, deliverables via **Features**)                                       |
 | `#/pricing`            | Pricing packages (+ their features via **Features**)                                                  |

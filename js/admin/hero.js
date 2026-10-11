@@ -35,10 +35,10 @@ export function render(view) {
       { name: 'trust_statement', label: 'Trust statement', max: 200, full: true },
       { type: 'section', label: 'Media' },
       { name: 'media_type', label: 'Media type', type: 'select', required: true, options: [
-        { value: 'image', label: 'Image' }, { value: 'video', label: 'Video' }, { value: 'none', label: 'None' },
+        { value: 'devices', label: 'Laptop + phone mockup' }, { value: 'image', label: 'Image' }, { value: 'video', label: 'Video' }, { value: 'none', label: 'None' },
       ] },
-      { name: 'media_alt', label: 'Media description (alt text)', max: 200 },
-      { name: 'media_url', label: 'Hero image or video', type: 'media', upload: { kind: 'media', folder: 'hero' }, hint: 'Upload an image (media type Image) or an MP4/WebM video (media type Video).',
+      { name: 'media_alt', label: 'Image / laptop screen description (alt text)', max: 200 },
+      { name: 'media_url', label: 'Hero image / video / laptop screen', type: 'media', upload: { kind: 'media', folder: 'hero' }, hint: 'Image or Video: the hero media. Laptop + phone: the laptop screen (landscape, about 16:10, e.g. 1600 × 1000 px).',
         validate: (v, all) => {
           if (!v) return null;
           const isVideo = /\.(mp4|webm)(\?|$)/i.test(v);
@@ -46,6 +46,8 @@ export function render(view) {
           if (all.media_type === 'image' && isVideo) return 'Media type is Image: upload an image, or switch the media type to Video.';
           return null;
         } },
+      { name: 'phone_image_url', label: 'Phone screen', type: 'media', upload: { kind: 'media', folder: 'hero' }, hint: 'Used with Laptop + phone mockup. Portrait, about 9:19, e.g. 900 × 1950 px.' },
+      { name: 'phone_image_alt', label: 'Phone screen description (alt text)', max: 200, full: true },
       { name: 'media_poster_url', label: 'Video poster image', type: 'image', upload: { kind: 'image', folder: 'hero' }, hint: 'Shown before the video loads.' },
       { type: 'section', label: 'Element order & visibility', hint: 'Drag or use the arrows to reorder; untick to hide.' },
       { name: 'elements', label: 'Hero elements', type: 'elements', elementLabels: ELEMENT_LABELS, default: DEFAULT_ELEMENTS },

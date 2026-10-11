@@ -135,9 +135,11 @@ create table if not exists public.hero (
   headline            text not null check (char_length(headline) between 1 and 200),
   subheadline         text check (char_length(subheadline) <= 300),
   description         text check (char_length(description) <= 1000),
-  media_type          text not null default 'image' check (media_type in ('none', 'image', 'video')),
+  media_type          text not null default 'image',
   media_url           text check (public.is_safe_url(media_url)),
   media_poster_url    text check (public.is_safe_url(media_poster_url)),
+  phone_image_url     text check (public.is_safe_url(phone_image_url)),
+  phone_image_alt     text check (char_length(phone_image_alt) <= 200),
   media_alt           text check (char_length(media_alt) <= 200),
   primary_cta_label   text check (char_length(primary_cta_label) <= 40),
   primary_cta_url     text check (public.is_safe_url(primary_cta_url)),
@@ -152,6 +154,12 @@ create table if not exists public.hero (
   created_at          timestamptz not null default now(),
   updated_at          timestamptz not null default now()
 );
+
+-- Hero upgrades for projects created with an earlier version of this file.
+alter table public.hero add column if not exists phone_image_url text check (public.is_safe_url(phone_image_url));
+alter table public.hero add column if not exists phone_image_alt text check (char_length(phone_image_alt) <= 200);
+alter table public.hero drop constraint if exists hero_media_type_check;
+alter table public.hero add constraint hero_media_type_check check (media_type in ('none', 'image', 'video', 'devices'));
 
 -- About (single row)
 create table if not exists public.about (
@@ -782,7 +790,7 @@ select * from (values
 where not exists (select 1 from public.navigation_items);
 
 insert into public.hero (
-  id, badge, headline, subheadline, description, media_type, media_url, media_alt,
+  id, badge, headline, subheadline, description, media_type, media_url, media_alt, phone_image_url, phone_image_alt,
   primary_cta_label, primary_cta_url, secondary_cta_label, secondary_cta_url,
   stat_value, stat_label, trust_statement
 ) values (
@@ -791,9 +799,11 @@ insert into public.hero (
   'Social media management and custom content for clinics, brands and events.',
   'An Abu Dhabi marketing agency helping businesses grow, wherever they are in the world.',
   'We manage your social media accounts and create custom content that brings more patients through your clinic doors.',
-  'image',
-  'assets/img/hero.jpg',
-  'Bilingual healthcare and aesthetics campaign designs created by October Growth',
+  'devices',
+  'assets/img/og-image.jpg',
+  'October Growth agency portfolio shown on a laptop',
+  'assets/img/work-1.jpg',
+  'Carbon laser campaign design shown on a phone',
   'Get started', '#contact',
   'View prices', 'pricing.html',
   '1.18M+', 'video views, filmed in-house',

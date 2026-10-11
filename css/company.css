@@ -1131,3 +1131,111 @@
     height: 34px;
   }
 }
+
+/* ---------- Hero device mockup (laptop + phone) ---------- */
+.hero__media--devices {
+  --bezel: #111214;
+  position: relative;
+  padding: clamp(2.5rem, 1.5rem + 3vw, 4.5rem) 0 clamp(1rem, 0.5rem + 1vw, 2rem);
+}
+
+.hero__media--devices img,
+.hero__media--devices video {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: cover;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.device-laptop {
+  position: relative;
+  width: 84%;
+  margin-left: auto;
+  filter: drop-shadow(0 30px 40px rgb(0 0 0 / 0.28));
+}
+
+.device-laptop__lid {
+  padding: 2.2% 2.2% 3%;
+  background: var(--bezel);
+  border-radius: 14px 14px 4px 4px;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08);
+}
+
+.device-laptop__screen {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #000;
+}
+
+.device-laptop__base {
+  position: relative;
+  width: 112%;
+  height: 0;
+  padding-bottom: 3.2%;
+  margin-left: -6%;
+  background: linear-gradient(#d9dadd, #9fa1a6 60%, #6e7075);
+  border-radius: 2px 2px 14px 14px;
+}
+
+.device-laptop__base::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 16%;
+  height: 40%;
+  transform: translateX(-50%);
+  background: #8a8c91;
+  border-radius: 0 0 6px 6px;
+}
+
+.device-phone {
+  position: absolute;
+  left: 2%;
+  bottom: 4%;
+  width: 26%;
+  padding: 1.6%;
+  background: var(--bezel);
+  border-radius: 14% / 6.5%;
+  box-shadow: 0 25px 45px -15px rgb(0 0 0 / 0.45), inset 0 0 0 1px rgb(255 255 255 / 0.1);
+}
+
+.device-phone::before {
+  content: "";
+  position: absolute;
+  top: 3.2%;
+  left: 50%;
+  z-index: 1;
+  width: 30%;
+  height: 2.6%;
+  transform: translateX(-50%);
+  background: var(--bezel);
+  border-radius: 999px;
+}
+
+.device-phone__screen {
+  aspect-ratio: 9 / 19.5;
+  overflow: hidden;
+  border-radius: 11% / 5.2%;
+  background: #000;
+}
+
+.device__placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 8%;
+  background:
+    radial-gradient(circle at 75% 25%, color-mix(in srgb, var(--brand-accent) 30%, transparent), transparent 55%),
+    var(--brand-primary);
+  color: var(--brand-secondary);
+  font-family: var(--font-display);
+  font-size: clamp(0.8rem, 0.5rem + 1vw, 1.4rem);
+  letter-spacing: 0.2em;
+  text-align: center;
+  text-transform: uppercase;
+}
