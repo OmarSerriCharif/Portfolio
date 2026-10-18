@@ -22,19 +22,21 @@ from (values
 
   (4,
    $q$How much does social media management cost in Abu Dhabi?$q$,
-   $a$Social media management costs **AED 890 per month**. It covers Instagram, Facebook, X and LinkedIn, with scheduled and managed posts, written captions, and replies to patients through messages.$a$),
+   $a$Social media management starts from **AED 890 per month**. It covers Instagram, Facebook, X and LinkedIn, with scheduled and managed posts, written captions, and replies to patients through messages.
+
+Special offer: social media management **plus 10 custom image posts**, starting from **AED 1,900 per month**.$a$),
 
   (5,
    $q$How much does social media content creation cost?$q$,
-   $a$Content creation costs **AED 99 per post**. Every post is custom: graphics, reels and stories built for your brand to build trust and announce your discounts and news. Never stock, never templated.$a$),
+   $a$Content creation starts from **AED 99 per image post**. Every post is a custom image design built for your brand to build trust and announce your discounts and news. Never stock, never templated. Reels are not included in this price; contact us for a quote.$a$),
 
   (6,
    $q$How much does paid ad management cost?$q$,
-   $a$Paid ad management is **15% of the campaign budget, with a minimum of AED 5,000**. It includes campaign setup, targeting, ongoing optimization and weekly reports.$a$),
+   $a$Paid ad management starts from **15% of the campaign budget, with a minimum of AED 5,000**. It includes campaign setup, targeting, ongoing optimization and weekly reports.$a$),
 
   (7,
    $q$Do you offer social media coverage for medical conferences and events?$q$,
-   $a$Yes. Event and conference coverage costs **AED 100 per hour** and includes:
+   $a$Yes. Event and conference coverage starts from **AED 100 per hour** and includes:
 
 - Live coverage: real-time posts and stories from the floor
 - Reels and highlights: quick video from sessions and speakers
@@ -59,9 +61,9 @@ We have worked with 20+ medical conferences and congresses, and covered LIVEX 20
    $q$Do you build websites, and how much do they cost?$q$,
    $a$Yes. Choose the type of website that fits your business:
 
-- **Portfolio / Event / Blog: AED 999.** Scope: page count, basic layout, contact forms.
-- **Business / Corporate: AED 2,999.** Scope: content management system (CMS), custom branding, CRM sync.
-- **E-commerce Store: AED 7,999.** Scope: product volume, UAE payment gateways (e.g., PayTabs), logistics APIs.$a$),
+- **Portfolio / Event / Blog: starting from AED 999.** Scope: page count, basic layout, contact forms.
+- **Business / Corporate: starting from AED 2,999.** Scope: content management system (CMS), custom branding, CRM sync.
+- **E-commerce Store: starting from AED 7,999.** Scope: product volume, UAE payment gateways (e.g., PayTabs), logistics APIs.$a$),
 
   (12,
    $q$Do you offer influencer marketing?$q$,

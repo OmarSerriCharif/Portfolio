@@ -6,25 +6,14 @@ import { icon, hasIcon } from '../icons.js';
 import { renderMarkdown, markdownToText } from '../markdown.js';
 import { initSite, loadInto, emptyState, applySeo, skeletonCards, skeletonText, observeReveal } from '../main.js';
 import { createSectionShell, ctaButton } from './sections.js';
-import { priceBlock, loadPackages, packagesGrid, addonsGroups } from './pricing.js';
 import { renderContactSection } from './contact.js';
 
 function serviceHref(slug) {
   return `service.html?slug=${encodeURIComponent(slug)}`;
 }
 
-/** Price shown on a service card: the linked package if one exists, otherwise the service's own price. */
-function servicePrice(service, packagesByService) {
-  const pkg = (packagesByService.get(service.id) || [])[0];
-  if (pkg) return priceBlock(pkg);
-  if (service.starting_price !== null || service.pricing_type === 'quote' || service.pricing_type === 'custom') {
-    return priceBlock({ ...service, price: service.starting_price }, { periodKey: 'pricing_type' });
-  }
-  return null;
-}
-
-export function serviceCard(service, index, packagesByService) {
-  const price = servicePrice(service, packagesByService);
+// Prices are shown only in the pricing list (homepage section and pricing.html), not on service cards or pages.
+export function serviceCard(service, index) {
   const cover = assetUrl(service.cover_image_url);
   return el('article', { class: `card card--interactive service-card reveal${service.is_featured ? ' is-featured' : ''}` }, [
     cover ? el('div', { class: 'card__media' }, [el('img', { src: cover, alt: service.cover_image_alt || '', loading: 'lazy', decoding: 'async' })]) : null,
@@ -35,7 +24,6 @@ export function serviceCard(service, index, packagesByService) {
     el('h3', { class: 'card__title' }, [el('a', { href: serviceHref(service.slug), text: service.name })]),
     service.short_description ? el('p', { class: 'card__text', text: service.short_description }) : null,
     el('div', { class: 'card__footer' }, [
-      price,
       el('span', { class: 'card__link', 'aria-hidden': 'true' }, ['Learn more', icon('arrow-right', { size: 16 })]),
     ]),
   ]);
@@ -43,18 +31,9 @@ export function serviceCard(service, index, packagesByService) {
 
 export async function renderServicesSection(body) {
   await loadInto(body, async () => {
-    const [services, packages] = await Promise.all([
-      listPublic('services'),
-      listPublic('pricing_packages', { select: 'id, service_id, price, currency, pricing_period, price_note, minimum_price, original_price, display_order' }),
-    ]);
+    const services = await listPublic('services');
     if (!services.length) return emptyState('Our services will be listed here soon.', 'Services coming soon', 'briefcase');
-    const packagesByService = new Map();
-    for (const p of packages) {
-      if (!p.service_id) continue;
-      if (!packagesByService.has(p.service_id)) packagesByService.set(p.service_id, []);
-      packagesByService.get(p.service_id).push(p);
-    }
-    return el('div', { class: 'grid', style: { '--min': '270px' } }, services.map((s, i) => serviceCard(s, i, packagesByService)));
+    return el('div', { class: 'grid', style: { '--min': '270px' } }, services.map((s, i) => serviceCard(s, i)));
   }, { skeleton: () => skeletonCards(6) });
 }
 
@@ -99,10 +78,8 @@ async function initServicePage() {
       keepQuery: true,
     });
 
-    const [features, pkgData, addons, sections] = await Promise.all([
+    const [features, sections] = await Promise.all([
       adminList('service_features', { eq: { service_id: service.id } }),
-      loadPackages({ serviceId: service.id }),
-      listPublic('addons', { eq: { service_id: service.id } }),
       listPublic('sections').catch(() => []),
     ]);
 
@@ -140,26 +117,12 @@ async function initServicePage() {
       ]));
     }
 
-    if (pkgData.packages.length) {
-      article.appendChild(el('section', { class: 'detail__block' }, [
-        el('h2', { text: 'Pricing' }),
-        packagesGrid(pkgData.packages, pkgData.featuresByPackage),
-      ]));
-    }
-    if (addons.length) {
-      article.appendChild(el('section', { class: 'detail__block' }, [
-        el('h2', { text: 'Options' }),
-        ...addonsGroups(addons),
-      ]));
-    }
-
     const aside = el('aside', { class: 'detail__aside', 'aria-label': 'Get started' }, [
       el('div', { class: 'card' }, [
         el('span', { class: 'card__icon' }, [icon(hasIcon(service.icon) ? service.icon : 'layers', { size: 22 })]),
         el('h2', { class: 'card__title', text: service.name }),
-        pkgData.packages[0] ? priceBlock(pkgData.packages[0]) : (service.starting_price !== null ? priceBlock({ ...service, price: service.starting_price }, { periodKey: 'pricing_type' }) : null),
-        service.price_note && !pkgData.packages[0] ? el('p', { class: 'card__text', text: service.price_note }) : null,
-        ctaButton(service.cta_label || 'Contact us', service.cta_url || '#contact', { variant: 'accent', interest: service.name }),
+        ctaButton(service.cta_label || 'Contact us', service.cta_url || '#contact', { interest: service.name }),
+        ctaButton('View prices', 'pricing.html', { variant: 'outline' }),
       ]),
     ]);
 

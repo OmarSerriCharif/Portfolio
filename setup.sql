@@ -239,6 +239,7 @@ create table if not exists public.pricing_packages (
   description       text check (char_length(description) <= 10000),
   price             numeric(12, 2) check (price >= 0),
   currency          text not null default 'AED' check (currency ~ '^[A-Z]{3}$'),
+  price_prefix      text check (char_length(price_prefix) <= 40),
   pricing_period    text not null default 'one_time' check (pricing_period in ('one_time', 'monthly', 'quarterly', 'yearly', 'per_post', 'per_hour', 'percentage', 'custom')),
   price_note        text check (char_length(price_note) <= 150),
   minimum_price     numeric(12, 2) check (minimum_price >= 0),
@@ -280,6 +281,7 @@ create table if not exists public.addons (
   description   text check (char_length(description) <= 2000),
   price         numeric(12, 2) check (price >= 0),
   currency      text not null default 'AED' check (currency ~ '^[A-Z]{3}$'),
+  price_prefix  text check (char_length(price_prefix) <= 40),
   pricing_type  text not null default 'fixed' check (pricing_type in ('fixed', 'starting_from', 'per_unit', 'monthly', 'per_hour', 'percentage', 'quote')),
   price_note    text check (char_length(price_note) <= 150),
   quantity      text check (char_length(quantity) <= 60),
@@ -293,6 +295,10 @@ create table if not exists public.addons (
   created_at    timestamptz not null default now(),
   updated_at    timestamptz not null default now()
 );
+
+-- Price prefix ("Starting from") for projects created with an earlier version of this file.
+alter table public.pricing_packages add column if not exists price_prefix text check (char_length(price_prefix) <= 40);
+alter table public.addons           add column if not exists price_prefix text check (char_length(price_prefix) <= 40);
 
 create table if not exists public.industries (
   id            uuid primary key default gen_random_uuid(),
@@ -928,51 +934,60 @@ where not exists (select 1 from public.service_features);
 
 insert into public.pricing_packages (
   service_id, name, slug, short_description, price, currency, pricing_period, price_note, minimum_price,
-  cta_label, cta_url, status, display_order
+  price_prefix, badge, is_popular, is_featured, cta_label, cta_url, status, display_order
 )
 select s.id, v.name, v.slug, v.short_description, v.price, 'AED', v.pricing_period, v.price_note, v.minimum_price,
-       'Get started', '#contact', 'published', v.display_order
+       'Starting from', v.badge, v.badge is not null, v.badge is not null,
+       case when v.badge is null then 'Get started' else 'Get the offer' end, '#contact', 'published', v.display_order
 from (values
+  ('social-media-management', 'Social Media Management + 10 Posts', 'social-media-management-10-posts',
+   'Monthly social media management plus 10 custom image posts.',
+   1900.00, 'monthly', null, null::numeric, 0, 'Special offer'),
   ('social-media-management', 'Social Media Management', 'social-media-management',
    'Instagram, Facebook, X and LinkedIn. Scheduled and managed posts, written captions, and replies to patients through messages.',
-   890.00, 'monthly', null, null::numeric, 1),
+   890.00, 'monthly', null, null::numeric, 1, null),
   ('content-creation', 'Content Creation', 'content-creation',
-   'Custom graphics, reels and stories that build trust and announce your discounts and news.',
-   99.00, 'per_post', null, null::numeric, 2),
+   'Custom image posts that build trust and announce your discounts and news. Reels are not included.',
+   99.00, 'per_post', 'image posts only', null::numeric, 2, null),
   ('paid-ad-management', 'Paid Ad Management', 'paid-ad-management',
    'Campaign setup, targeting and ongoing optimization, with weekly reports.',
-   15.00, 'percentage', 'of the campaign budget', 5000.00, 3),
+   15.00, 'percentage', 'of the campaign budget', 5000.00, 3, null),
   ('event-conference-coverage', 'Event & Conference Coverage', 'event-conference-coverage',
    'Live social media coverage for medical conferences and major events.',
-   100.00, 'per_hour', null, null::numeric, 4)
-) as v(service_slug, name, slug, short_description, price, pricing_period, price_note, minimum_price, display_order)
+   100.00, 'per_hour', null, null::numeric, 4, null)
+) as v(service_slug, name, slug, short_description, price, pricing_period, price_note, minimum_price, display_order, badge)
 join public.services s on s.slug = v.service_slug
 where not exists (select 1 from public.pricing_packages);
 
-insert into public.package_features (package_id, name, is_included, display_order)
-select p.id, v.name, true, v.display_order
+insert into public.package_features (package_id, name, quantity, is_included, display_order)
+select p.id, v.name, v.quantity, v.is_included, v.display_order
 from (values
-  ('social-media-management',   'Instagram, Facebook, X and LinkedIn', 1),
-  ('social-media-management',   'Scheduled and managed posts', 2),
-  ('social-media-management',   'Written captions', 3),
-  ('social-media-management',   'Replies to patients through messages', 4),
-  ('content-creation',          'Custom graphics', 1),
-  ('content-creation',          'Reels and stories', 2),
-  ('content-creation',          'Announcements for your discounts and news', 3),
-  ('paid-ad-management',        'Campaign setup', 1),
-  ('paid-ad-management',        'Targeting', 2),
-  ('paid-ad-management',        'Ongoing optimization', 3),
-  ('paid-ad-management',        'Weekly reports', 4),
-  ('event-conference-coverage', 'Live posts and stories from the floor', 1),
-  ('event-conference-coverage', 'Reels & highlights from sessions and speakers', 2),
-  ('event-conference-coverage', 'Bilingual EN / AR captions', 3),
-  ('event-conference-coverage', 'Post-event recap content', 4)
-) as v(slug, name, display_order)
+  ('social-media-management-10-posts', 'Instagram, Facebook, X and LinkedIn', null, true, 1),
+  ('social-media-management-10-posts', 'Scheduled and managed posts', null, true, 2),
+  ('social-media-management-10-posts', 'Written captions', null, true, 3),
+  ('social-media-management-10-posts', 'Replies to patients through messages', null, true, 4),
+  ('social-media-management-10-posts', 'Custom image posts', '10 posts per month', true, 5),
+  ('social-media-management', 'Instagram, Facebook, X and LinkedIn', null, true, 1),
+  ('social-media-management', 'Scheduled and managed posts', null, true, 2),
+  ('social-media-management', 'Written captions', null, true, 3),
+  ('social-media-management', 'Replies to patients through messages', null, true, 4),
+  ('content-creation', 'Custom image post designs', null, true, 1),
+  ('content-creation', 'Announcements for your discounts and news', null, true, 2),
+  ('content-creation', 'Reels', null, false, 3),
+  ('paid-ad-management', 'Campaign setup', null, true, 1),
+  ('paid-ad-management', 'Targeting', null, true, 2),
+  ('paid-ad-management', 'Ongoing optimization', null, true, 3),
+  ('paid-ad-management', 'Weekly reports', null, true, 4),
+  ('event-conference-coverage', 'Live posts and stories from the floor', null, true, 1),
+  ('event-conference-coverage', 'Reels & highlights from sessions and speakers', null, true, 2),
+  ('event-conference-coverage', 'Bilingual EN / AR captions', null, true, 3),
+  ('event-conference-coverage', 'Post-event recap content', null, true, 4)
+) as v(slug, name, quantity, is_included, display_order)
 join public.pricing_packages p on p.slug = v.slug
 where not exists (select 1 from public.package_features);
 
-insert into public.addons (service_id, group_label, name, slug, description, price, currency, pricing_type, icon, cta_label, cta_url, status, display_order)
-select s.id, 'Website Creation', v.name, v.slug, v.description, v.price, 'AED', 'fixed', v.icon, 'Get started', '#contact', 'published', v.display_order
+insert into public.addons (service_id, group_label, name, slug, description, price, currency, pricing_type, price_prefix, icon, cta_label, cta_url, status, display_order)
+select s.id, 'Website Creation', v.name, v.slug, v.description, v.price, 'AED', 'fixed', 'Starting from', v.icon, 'Get started', '#contact', 'published', v.display_order
 from (values
   ('Portfolio / Event / Blog', 'website-portfolio-event-blog', 'Scope: page count, basic layout, contact forms.', 999.00, 'file', 1),
   ('Business / Corporate', 'website-business-corporate', 'Scope: content management system (CMS), custom branding, CRM sync.', 2999.00, 'briefcase', 2),

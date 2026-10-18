@@ -20,7 +20,7 @@ export function render(view) {
       r.is_featured ? { text: 'Featured', variant: 'primary' } : null,
       r.badge ? { text: r.badge } : null,
     ].filter(Boolean),
-    defaults: { status: 'draft', is_visible: true, currency: 'AED', pricing_period: 'one_time' },
+    defaults: { status: 'draft', is_visible: true, currency: 'AED', pricing_period: 'one_time', price_prefix: 'Starting from' },
     rowActions: [{ label: 'Features', icon: 'list', onClick: (row) => openPackageFeatures(row) }],
     fields: [
       { type: 'section', label: 'Package' },
@@ -31,6 +31,7 @@ export function render(view) {
       { name: 'short_description', label: 'Short description', type: 'textarea', max: 300, rows: 3, full: true },
       { name: 'description', label: 'Full description', type: 'markdown', max: 10000 },
       { type: 'section', label: 'Price' },
+      { name: 'price_prefix', label: 'Text before the price', max: 40, placeholder: 'Starting from', hint: 'Shown before the amount, e.g. “Starting from”. Leave empty for none.' },
       { name: 'price', label: 'Price', type: 'number', minNum: 0, maxNum: 9999999999, hint: 'For percentage pricing enter the percentage (0–100).',
         validate: (v, all) => (all.pricing_period === 'percentage' && v !== null && v > 100 ? 'A percentage cannot exceed 100.' : null) },
       CURRENCY_FIELD,

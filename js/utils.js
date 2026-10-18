@@ -144,6 +144,7 @@ export function priceParts(row, periodKey = 'pricing_period') {
   } else if (period === 'custom') {
     parts.amount = 'Custom';
   }
+  if (row.price_prefix && parts.amount && period !== 'quote') parts.prefix = row.price_prefix;
   if (row.minimum_price !== null && row.minimum_price !== undefined) {
     parts.minimum = `Minimum ${formatMoney(row.minimum_price, currency)}`;
   }

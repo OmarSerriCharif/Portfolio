@@ -15,7 +15,7 @@ export function render(view) {
       const p = priceParts(r, 'pricing_type');
       return [r.group_label, [p.prefix, p.amount, p.period].filter(Boolean).join(' '), truncate(r.description, 50)].filter(Boolean).join(' · ');
     },
-    defaults: { status: 'draft', is_visible: true, currency: 'AED', pricing_type: 'fixed' },
+    defaults: { status: 'draft', is_visible: true, currency: 'AED', pricing_type: 'fixed', price_prefix: 'Starting from' },
     fields: [
       { type: 'section', label: 'Add-on' },
       { name: 'name', label: 'Name', required: true, max: 100 },
@@ -26,6 +26,7 @@ export function render(view) {
       { name: 'icon', label: 'Icon', type: 'icon' },
       { name: 'image_url', label: 'Image', type: 'image', upload: { kind: 'image', folder: 'addons' } },
       { type: 'section', label: 'Price' },
+      { name: 'price_prefix', label: 'Text before the price', max: 40, placeholder: 'Starting from', hint: 'Shown before the amount, e.g. “Starting from”. Leave empty for none.' },
       { name: 'price', label: 'Price', type: 'number', minNum: 0, maxNum: 9999999999 },
       CURRENCY_FIELD,
       { name: 'pricing_type', label: 'Pricing type', type: 'select', required: true, options: ADDON_PRICING_TYPES },
