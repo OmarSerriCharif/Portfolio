@@ -1,0 +1,92 @@
+1
+00:00:00,150 --> 00:00:02,950
+“…the aggressive impulses of an evil empire.”
+
+2
+00:00:03,140 --> 00:00:05,340
+September, 1983.
+
+3
+00:00:05,840 --> 00:00:08,250
+The Cold War is at its most dangerous.
+
+4
+00:00:08,750 --> 00:00:11,600
+Thousands of nuclear missiles stand ready to fly.
+
+5
+00:00:12,440 --> 00:00:13,620
+Just after midnight,
+
+6
+00:00:13,640 --> 00:00:15,810
+in a secret bunker outside Moscow,
+
+7
+00:00:15,830 --> 00:00:18,620
+Lieutenant Colonel Stanislav Petrov is on duty.
+
+8
+00:00:19,430 --> 00:00:20,860
+Then, the alarm.
+
+9
+00:00:21,360 --> 00:00:23,950
+Satellites report an American missile launch.
+
+10
+00:00:24,450 --> 00:00:25,440
+Then another.
+
+11
+00:00:25,940 --> 00:00:27,150
+Five in all.
+
+12
+00:00:27,960 --> 00:00:29,970
+Protocol says: report it.
+
+13
+00:00:30,470 --> 00:00:33,270
+A Soviet counterstrike could follow within minutes.
+
+14
+00:00:34,090 --> 00:00:35,600
+But Petrov doubts it.
+
+15
+00:00:36,100 --> 00:00:38,640
+A real first strike would mean hundreds of missiles,
+
+16
+00:00:38,660 --> 00:00:39,730
+not five.
+
+17
+00:00:40,230 --> 00:00:42,310
+Ground radar confirms nothing.
+
+18
+00:00:43,120 --> 00:00:44,850
+He calls it a false alarm.
+
+19
+00:00:45,670 --> 00:00:46,710
+He was right.
+
+20
+00:00:47,210 --> 00:00:50,070
+Sunlight on high clouds had fooled the satellites.
+
+21
+00:00:50,890 --> 00:00:52,690
+Petrov received no medal.
+
+22
+00:00:53,180 --> 00:00:55,970
+His story stayed secret for fifteen years.
+
+23
+00:00:56,200 --> 00:01:00,000
+The man who saved the world.
+
